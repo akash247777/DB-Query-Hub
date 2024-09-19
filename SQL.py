@@ -13,7 +13,7 @@ def connect_and_query(server, database, user_id, password, query):
             f'DATABASE={database};'
             f'UID={user_id};'
             f'PWD={password};'
-            'timeout=30;'  # Increase timeout to 30 seconds
+            'Connection Timeout=30;'  # Corrected timeout syntax
         )
         st.success("Connected to SQL Server successfully!")
 
@@ -24,16 +24,19 @@ def connect_and_query(server, database, user_id, password, query):
         cursor.execute(query)
 
         # Commit if it's an INSERT, UPDATE, or DELETE query
-        if query.lower().startswith(('insert', 'update', 'delete')):
+        if query.strip().lower().startswith(('insert', 'update', 'delete')):
             connection.commit()
             st.success("Query executed successfully!")
 
         # Fetch and display results for SELECT queries
-        elif query.lower().startswith('select'):
+        elif query.strip().lower().startswith('select'):
             rows = cursor.fetchall()
-            st.write("### Query Results:")
-            for row in rows:
-                st.write(row)
+            if rows:
+                st.write("### Query Results:")
+                for row in rows:
+                    st.write(row)
+            else:
+                st.warning("No results found.")
 
     except pyodbc.Error as e:
         st.error(f"Error connecting to SQL Server: {e}")

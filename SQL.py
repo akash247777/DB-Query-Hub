@@ -47,10 +47,10 @@ def connect_and_query(server, database, user_id, password, query):
 st.title("SQL Server Query Interface")
 
 # Input fields
-server = st.text_input("Server")
-database = st.text_input("Database")
-user_id = st.text_input("User ID")
-password = st.text_input("Password", type="password")
+server = st.text_input("Server", value="APL94855")  # Pre-fill the server name
+database = st.text_input("Database")  # You'll need to enter the database manually
+user_id = st.text_input("User ID", value="sa")  # Use 'sa' based on your image
+password = st.text_input("Password", type="password")  # Enter the password
 
 # Text area for SQL query
 query = st.text_area("Enter SQL Query")

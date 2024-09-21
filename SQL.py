@@ -3,6 +3,8 @@ import pyodbc
 
 # Function to connect to SQL Server and execute query
 def connect_and_query(server, database, user_id, password, query):
+    connection = None
+    cursor = None
     try:
         # Establish connection to the database
         connection = pyodbc.connect(
@@ -35,9 +37,9 @@ def connect_and_query(server, database, user_id, password, query):
         st.error(f"Error connecting to SQL Server: {e}")
 
     finally:
-        if cursor:
+        if cursor is not None:
             cursor.close()
-        if connection:
+        if connection is not None:
             connection.close()
         st.info("Connection closed.")
 
